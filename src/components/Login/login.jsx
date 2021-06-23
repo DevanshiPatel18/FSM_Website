@@ -19,15 +19,17 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        var flag = 1;
+        let flag = 1;
+        console.log(form.Username + " " + form.Password)
         db.collection('User').get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if(doc.data().Email === form.Username && doc.data().Password === form.Password){
-                    flag= 0;
+                console.log(doc.data().Email + " " + doc.data().Password + " " + form);
+                if(doc.data().Email == form.Username && doc.data().Password == form.Password){
                     alert('hello' + form.Username);
+                    flag = 0;
                 }
             })
-        }).catch(err => alert(err)).then(() => {if(flag === 1) alert('incorrect Credentials')});
+        }).catch(err => alert(err)).then(() => {if (flag === 1) alert('Invalid credentials')});
     }
         return ( 
             <section className = 'vh-100 overflow-hidden'>
@@ -40,13 +42,13 @@ const Login = () => {
                                 </div>
                                 <form onSubmit = {handleSubmit} className = 'mt-4'>
                                         <div className = 'form-outline mb-3 col'>
-                                            <input type="email" id='email' className = 'form-control ' placeholder = 'Username' onChange = {handleInputChange}/>
+                                            <input type="email" id='email' className = 'form-control' name="Username" placeholder = 'Username' onChange = {handleInputChange}/>
                                         </div>
                                         <div className = 'form-outline mb-3 col'>
-                                            <input type="password" id='password' className = 'form-control' placeholder = 'Password' onChange = {handleInputChange}/>
+                                            <input type="password" id='password' className = 'form-control' name="Password" placeholder = 'Password' onChange = {handleInputChange}/>
                                         </div>
                                         <div className = 'form-outline mb-3 col'>
-                                            <input type="Submit" id='submit' className = 'form-control btn' value = 'Submit'/>
+                                            <input type="Submit" id='submit' className = 'form-control btn'/>
                                         </div>
                                 </form>
                             </div>
