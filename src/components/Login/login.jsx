@@ -48,7 +48,7 @@ const Login = () => {
                                             <input type="password" id='password' className = 'form-control' name="Password" placeholder = 'Password' onChange = {handleInputChange}/>
                                         </div>
                                         <div className = 'form-outline mb-3 col'>
-                                            <input type="Submit" id='submit' className = 'form-control btn'/>
+                                            <input type="Submit" id='submit' className = 'form-control btn' value = "Submit"/>
                                         </div>
                                 </form>
                             </div>

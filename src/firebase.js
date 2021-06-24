@@ -3,12 +3,11 @@ require('firebase/firestore')
 require('firebase/auth')
 
 const firebaseConfig = { 
-    apiKey: "AIzaSyAkTxXNUT07vy-HvR6bxE_PYqfKI2Kdpas",
-    authDomain: "fsmwebsite-e67af.firebaseapp.com",
-    projectId: "fsmwebsite-e67af",
-    storageBucket: "fsmwebsite-e67af.appspot.com",
-    messagingSenderId: "120445896830",
-    appId: "1:120445896830:web:712213083399a6c999f02f"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET_ID,
+    appId: process.env.REACT_APP_APP_ID
 };
   
 firebase.initializeApp(firebaseConfig);
