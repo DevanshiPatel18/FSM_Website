@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './login.css';
 import logo from './images/logo.png';
-import { login } from '../../auth';
 import db from '../../firebase';
 
 const Login = () => {
@@ -24,7 +23,7 @@ const Login = () => {
         db.collection('User').get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 console.log(doc.data().Email + " " + doc.data().Password + " " + form);
-                if(doc.data().Email == form.Username && doc.data().Password == form.Password){
+                if(doc.data().Email === form.Username && doc.data().Password === form.Password){
                     alert('hello' + form.Username);
                     flag = 0;
                 }
