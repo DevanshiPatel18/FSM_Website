@@ -37,16 +37,16 @@ const Login = () => {
                         <div className = 'login'>
                             <div className = 'col-md-5 col-lg-5 col-xl-4 offset-xl-1 login-form'>
                                 <div className = 'col' >
-                                    <img className = 'img-fluid' src= {logo} alt="logo" />
+                                    <img className = 'img-fluid mb-3' src= {logo} alt="logo" />
                                 </div>
                                 <form onSubmit = {handleSubmit} className = 'mt-4'>
-                                        <div className = 'form-outline mb-3 col'>
+                                        <div className = 'form-outline mb-3 col-8'>
                                             <input type="email" id='email' className = 'form-control' name="Username" placeholder = 'Username' onChange = {handleInputChange}/>
                                         </div>
-                                        <div className = 'form-outline mb-3 col'>
+                                        <div className = 'form-outline mb-5 col-8'>
                                             <input type="password" id='password' className = 'form-control' name="Password" placeholder = 'Password' onChange = {handleInputChange}/>
                                         </div>
-                                        <div className = 'form-outline mb-3 col'>
+                                        <div className = 'form-outline col-6'>
                                             <input type="Submit" id='submit' className = 'form-control btn' value = "Submit"/>
                                         </div>
                                 </form>

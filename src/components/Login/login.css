@@ -23,7 +23,7 @@ section {
   border-bottom-left-radius: 10%;
 }
 form {
-  display: inline-block;
+  text-align: center;
 }
 #submit {
   width: 50%;
@@ -38,9 +38,11 @@ form {
 }
 .login input {
   border-radius: 80px;
-  width: 100%;
 }
 ::placeholder {
   color: hsl(238, 61%, 19%);
   text-align: center;
+}
+.form-outline {
+  margin: auto;
 }
