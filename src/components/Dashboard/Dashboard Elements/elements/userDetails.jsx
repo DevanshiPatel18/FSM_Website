@@ -30,7 +30,7 @@ function getDayName(number){
 export default function UserDetails(){
 
     return(
-        <div>
+        <div style={{backgroundColor: 'hsla(0,0,0,0)'}}>
         <Card style={{diplay: 'block', boxShadow: 'none', backgroundColor: 'hsla(0,0,0,0.5)', color: '#13154e'}}>
            
             <h4 style={{display: 'inline-block', float: 'left'}}>Hello, USER</h4>

@@ -1,7 +1,10 @@
 .App {
   text-align: center;
 }
-
+* {
+  font-family: "Baloo Da 2", cursive;
+  font-size: 1vw;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -6,6 +6,7 @@ import { makeStyles} from '@material-ui/core';
 const useStyles = makeStyles({
   root: {
     fontFamily: 'Baloo Da 2, cursive',
+    fontSize: '1.2rem'
   }
 });
 
