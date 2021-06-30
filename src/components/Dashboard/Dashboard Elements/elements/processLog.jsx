@@ -1,48 +1,59 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Card, CardHeader, CardContent ,Grid } from '@material-ui/core';
-import { Build } from '@material-ui/icons';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles( (theme) => ({
     card: {
         width: 30 + '%',
         display: 'inline-block',
         marginRight: 2+'%',
         textAlign: 'center',
-    }
-});
+        
+        [theme.breakpoints.down('md')]:{
+            display: 'block',
+            width: 100+'%',
+            marginBottom: 2+'%'
+        }
+    
+    },
+}));
 
 
 
 export default function ProcessLog(){
 
     const classes = useStyles();
-
+    const theme = useTheme();
 
     return(
         <Grid >
-            <h5><Build></Build>Process Log</h5>
-            <Card className = {classes.card}>
-                <CardHeader title= 'Workstation1' />
+            <Card className = {classes.card} >
+                <CardHeader title= {
+                            <h4 className = {classes.root} style={{color: 'hsl(44, 83%, 60%)', fontWeight: 500}}>Workstation 1</h4>
+                         } />
                 <CardContent>
-                     <p>
+                     <p style={{color: 'hsl(12, 92%, 46%)', fontWeight: 900}}>
                         Process related information
                     </p>
                 </CardContent>
             </Card>
             <Card className = {classes.card}>
-                <CardHeader title= 'Workstation 2' />
+                <CardHeader title= {
+                            <h4 className = {classes.root} style={{color: 'hsl(44, 83%, 60%)', fontWeight: 500}}>Workstation 1</h4>
+                         }/>
                 <CardContent>
-                    <p>
+                    <p style={{color: 'hsl(12, 92%, 46%)', fontWeight: 900}}>
                         Process related information
                     </p>
                 </CardContent>
             </Card>
             <Card className = {classes.card}>
-                <CardHeader title= 'Workstation 3' />
+                <CardHeader title= {
+                            <h4 className = {classes.root} style={{color: 'hsl(44, 83%, 60%)', fontWeight: 500}}>Workstation 1</h4>
+                         } />
                 <CardContent>
-                    <p>
+                    <p style={{color: 'hsl(12, 92%, 46%)', fontWeight: 900}}>
                         Process related information
                     </p>
                 </CardContent>

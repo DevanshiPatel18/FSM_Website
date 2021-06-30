@@ -6,12 +6,9 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -55,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  links: {
+    fontFamily: 'Baloo Da 2, cursive', 
+    fontSize: '10rem'
+  }
 }));
 
 function ResponsiveDrawer(props) {
@@ -70,16 +71,24 @@ function ResponsiveDrawer(props) {
   const drawerData = [
       {
           title: 'Dashboard',
-          icon: Dashboard
+          icon: Dashboard,
+          link: '/'
       },{
+        title: 'Workstation 1 Performance',
+        icon: Build,
+        link: '#PerformanceGraph'
+    },{
           title: 'Workstations',
-          icon: Build
+          icon: Build,
+          link: '#Workstations'
       },{
           title: 'Process Log',
-          icon: Assignment
+          icon: Assignment,
+          link: '#ProcessLogAndOrderHistory'
       },{
           title: 'Order History',
-          icon: LocalShipping
+          icon: LocalShipping,
+          link: '#ProcessLogAndOrderHistory'
       },{
           title: 'Log Out',
           icon: ExitToApp
@@ -98,7 +107,7 @@ function ResponsiveDrawer(props) {
           return(
           <ListItem button>
             <Grid component = {data.icon} style= {{marginRight: 10+'%', marginLeft: 10+'%'}}></Grid>
-            <ListItemText  style= {{fontFamily: 'Baloo Da 2, cursive', fontSize: '10rem'}}primary={data.title} />
+            <a href= {data.link} className = {classes.links} style={{color: 'white', textDecoration: 'none', }}><ListItemText multiline = {classes.links} classes= {classes.links} primary={data.title} /></a>
           </ListItem>
           );    
     })}
@@ -124,7 +133,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            <img src = {header} style= {{width: 100+'%', margin: 0, height: 100+'%', padding: 0}}></img>
+            <img src = {header} style= {{width: 100+'%', margin: 0, height: 100+'%', padding: 0}} alt ='FSM-Logo'></img>
           </Typography>
         </Toolbar>
       </AppBar>

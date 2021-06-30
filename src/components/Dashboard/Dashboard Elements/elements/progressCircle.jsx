@@ -47,5 +47,5 @@ export default function CircularStatic() {
     };
   }, []);
 
-  return <CircularProgressWithLabel style={{widht: 100+'%'}}value={progress} />;
+  return <CircularProgressWithLabel value={progress} />;
 }

@@ -1,51 +1,58 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { Grid, Table, TableHead, TableBody, TableCell, TableRow } from '@material-ui/core';
-import { Build } from '@material-ui/icons';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Card, Table, TableHead, TableBody, TableCell, TableRow } from '@material-ui/core';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+    root: {
+        padding: 5+'%',
+        backgroundColor: 'black',
+    },
+    tableCell: {
+        color: 'white',
+        fontFamily: 'Baloo Da 2, cursive'
+    },
 
-});
+    }    ));
 
 
 export default function OrderHistory(){
 
     const classes = useStyles();
+    const theme = useTheme();
 
     return(
-        <Grid >
-            <h5><Build></Build>Order History</h5>
-            <Table>
+        <Card className =  {classes.root} >
+            <Table style={{color: 'white'}}>
                 <TableHead>
-                    <TableRow>
-                        <TableCell>Order #</TableCell>
-                        <TableCell>Type</TableCell>
-                        <TableCell>TimeStamp</TableCell>
+                    <TableRow >
+                        <TableCell className = {classes.tableCell}>Order #</TableCell>
+                        <TableCell className = {classes.tableCell}>Type</TableCell>
+                        <TableCell className = {classes.tableCell}>TimeStamp</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     <TableRow>
-                        <TableCell>74185</TableCell>
-                        <TableCell>5/2</TableCell>
-                        <TableCell>Wednesday, 12:14:55</TableCell>
+                        <TableCell className = {classes.tableCell}>74185</TableCell>
+                        <TableCell className = {classes.tableCell}>5/2</TableCell>
+                        <TableCell className = {classes.tableCell}>Wednesday, 12:14:55</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell>74185</TableCell>
-                        <TableCell>5/2</TableCell>
-                        <TableCell>Wednesday, 12:14:55</TableCell>
+                        <TableCell className = {classes.tableCell}>74185</TableCell>
+                        <TableCell className = {classes.tableCell}>5/2</TableCell>
+                        <TableCell className = {classes.tableCell}>Wednesday, 12:14:55</TableCell>
                     </TableRow><TableRow>
-                        <TableCell>74185</TableCell>
-                        <TableCell>5/2</TableCell>
-                        <TableCell>Wednesday, 12:14:55</TableCell>
+                        <TableCell className = {classes.tableCell}>74185</TableCell>
+                        <TableCell className = {classes.tableCell}>5/2</TableCell>
+                        <TableCell className = {classes.tableCell}>Wednesday, 12:14:55</TableCell>
                     </TableRow><TableRow>
-                        <TableCell>74185</TableCell>
-                        <TableCell>5/2</TableCell>
-                        <TableCell>Wednesday, 12:14:55</TableCell>
+                        <TableCell className = {classes.tableCell}>74185</TableCell>
+                        <TableCell className = {classes.tableCell}>5/2</TableCell>
+                        <TableCell className = {classes.tableCell}>Wednesday, 12:14:55</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
-        </Grid>
+        </Card>
     );
     
 }
