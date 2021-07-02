@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 function CircularProgressWithLabel(props) {
   return (
     <Box  position="relative" display="inline-flex">
-      <CircularProgress variant="determinate" {...props} thickness = {5} size = {'8rem'}/>
+      <LinearProgress variant="determinate" {...props} thickness = {2} size = {'8rem'} style={{width: '10vh', height: 50+'%'}}/>
       <Box
         top={0}
         left={0}

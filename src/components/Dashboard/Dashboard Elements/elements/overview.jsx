@@ -1,34 +1,78 @@
 import React from 'react';
-//import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 import { Card, Grid, CardContent, Typography } from '@material-ui/core';
-import { Assignment, Build, ShowChart } from '@material-ui/icons';
+import { Assignment,ShoppingBasket,Delete, Build,Done, ShowChart } from '@material-ui/icons';
 import CircularStatic from './progressCircle';
+import { blue, red, orange, green } from '@material-ui/core/colors';
+import LinearWithValueLable from './linearProgress';
 
-//const useStyles = makeStyles({});
+const useStyles = makeStyles({
+    card: {
+        display: 'flex', 
+        justifyContent: 'center',
+        height: 8+'vh',
+        float: 'right', 
+        width: 4+'vw', 
+        borderTopLeftRadius: 100+'%',
+        borderBottomLeftRadius: 100+'%',
+        borderBottomRightRadius: 100+'%'
+    },
+    onHover: {
+        
+    }
+});
+
+
+
 
 export default function Overview(){
 
-    //const classes = useStyles();
+    const classes = useStyles();
 
     return(
-        <Card>
-            <Grid style={{ display: 'inline-block', width: 45 +'%', borderRight: '1px solid black',margin: 5+'%', height: '20h'}}>
-                <Grid style={{}}>
-                    <Grid><Assignment style={{marginRight: 2+'%'}}></Assignment><h4 style={{display: 'inline-block'}}>Order</h4></Grid>
-                    <CardContent style = {{textAlign: 'center'}}>
-                        <Grid style= {{display: 'inline-block', width: 40+'%',}}><h6>Number</h6><h4 style={{color: 'red',fontWeight: 900}}> 7415</h4></Grid>
-                        <Grid style= {{display: 'inline-block', width: 40+'%'}}><h6>Part</h6><h4 style={{color: 'red',fontWeight: 900}}>5/2</h4></Grid>
+        <Grid>
+        
+                <Card style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
+                    <Grid className = {classes.card}  style={{backgroundColor: blue[500]}}><ShoppingBasket fontSize = 'large' style={{marginTop: 25+'%', color: 'white'}}></ShoppingBasket></Grid>
+                    <CardContent style = {{marginLeft: 5+'%', marginTop:2+'%', paddingBottom: 1+'%'}}>
+                        <Typography>
+                            <Typography><h4 style={{marginBottom: 0}}>745896</h4></Typography>
+                            <p>Total Maufactured</p>
+                        </Typography>
                     </CardContent>
-                </Grid>
-                <Grid style={{}}>
-                    <Grid><Build style={{marginRight: 2+'%'}}></Build><h4 style={{display: 'inline-block'}}>Parts</h4></Grid>
-                    <CardContent style = {{textAlign: 'center'}}>
-                        <Grid style= {{display: 'inline-block', width: 40+'%'}}><h6>Total</h6><h4 style={{color: 'red',fontWeight: 900}}> 7415</h4></Grid>
-                        <Grid style= {{display: 'inline-block', width: 40+'%'}}><h6>Defective</h6><h4 style={{color: 'red',fontWeight: 900}}> 100</h4></Grid>
+                </Card>
+                <Card style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
+                    <Grid className = {classes.card} style={{backgroundColor: red[500]}}><Delete fontSize = 'large' style={{marginTop: 25+'%', color: 'white'}}></Delete></Grid>
+                    <CardContent style = {{marginLeft: 5+'%', marginTop:2+'%', paddingBottom: 1+'%'}}>
+                        <Typography>
+                            <Typography><h4 style={{marginBottom: 0}}>458</h4></Typography>
+                            <p>Defective</p>
+                        </Typography>
                     </CardContent>
-                </Grid>
-            </Grid>
-            <Grid  style={{display: 'inline-block', width: 40+'%', marginLeft: '-' + 3+'%', textAlign: 'center', justifyContent: 'center'}}>
+                </Card>
+                <Card style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
+                    <Grid className = {classes.card} style={{backgroundColor: orange[500]}}><Build fontSize = 'large' style={{marginTop: 25+'%', color: 'white'}}></Build></Grid>
+                    <CardContent style = {{marginLeft: 5+'%', marginTop:2+'%', paddingBottom: 1+'%'}}>
+                        <Typography>
+                            <Typography><h4 style={{marginBottom: 0}}>5/2</h4></Typography>
+                            <p>Part Maufactured</p>
+                        </Typography>
+                    </CardContent>
+                </Card>
+                <Card style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
+                    <Grid className = {classes.card} style={{backgroundColor: green[500]}}><Done fontSize = 'large' style={{marginTop: 25+'%', color: 'white'}}></Done></Grid>
+                    <CardContent style = {{marginLeft: 5+'%', marginTop:2+'%', paddingBottom: 1+'%'}}>
+                        <Typography>
+                            <LinearWithValueLable></LinearWithValueLable>
+                            <p>Process Progress</p>
+                        </Typography>
+                    </CardContent>
+                </Card>
+                
+        </Grid>
+    ); 
+}
+/*         <Card style={{display: 'inline-block', width: 50+'%', textAlign: 'center', justifyContent: 'center'}}>
                 
                 <CardContent style={{padding: 10+'%'}}>
                     <Grid><ShowChart style={{display: 'inline-block', marginRight: 5+'%'}}></ShowChart><h4 style={{display: 'inline-block'}}>Total Progress</h4></Grid>
@@ -39,7 +83,5 @@ export default function Overview(){
                         </Typography>
                     </CardContent>
     
-            </Grid>
-        </Card>
-    ); 
-}
+            </Card>
+*/

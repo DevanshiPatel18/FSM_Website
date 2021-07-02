@@ -16,8 +16,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Dashboard, Build, Assignment, LocalShipping, ExitToApp  } from '@material-ui/icons';
 import header from './Images/header.jpg';
 import {Grid} from '@material-ui/core';
-import AllDashboardElements from './Dashboard Elements/allElements';
-
+import { withRouter } from 'react-router';
 
 const drawerWidth = 15+'%';
 
@@ -55,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   links: {
     fontFamily: 'Baloo Da 2, cursive', 
     fontSize: '10rem'
-  }
+  },
 }));
 
 function ResponsiveDrawer(props) {
@@ -74,29 +73,30 @@ function ResponsiveDrawer(props) {
           icon: Dashboard,
           link: '/'
       },{
-        title: 'Workstation 1 Performance',
+        title: 'Workstation 1',
         icon: Build,
-        link: '#PerformanceGraph'
+        link: '/workstation1'
     },{
-          title: 'Workstations',
+          title: 'Workstation 2',
           icon: Build,
-          link: '#Workstations'
+          link: '/workstation2'
       },{
-          title: 'Process Log',
+          title: 'Workstation 3',
           icon: Assignment,
-          link: '#ProcessLogAndOrderHistory'
+          link: '/workstation3'
       },{
           title: 'Order History',
           icon: LocalShipping,
-          link: '#ProcessLogAndOrderHistory'
+          link: '/orderHistory'
       },{
           title: 'Log Out',
           icon: ExitToApp
       }
   ];
-
+  //backgroundColor: '#13154e'
   const drawer = (
-    <div style={{backgroundColor: '#13154e', color: 'white', borderTopRightRadius: 10+'%', borderBottomRightRadius: 10+'%', overflow: 'hidden'}}>
+    <div style={{backgroundColor: 'white', overflow: 'hidden', height: 100+'vh',  tranparency: 0.52}}>
+      <div style={{color: 'white', overflow: 'hidden', backgroundImage: 'url("https://images.unsplash.com/photo-1501768909872-92489434169d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGZ1dHVyaXN0aWN8ZW58MHwxfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60")'}}>
         <Typography style={{marginTop: 20+'%',textAlign: 'center', fontStyle: 'italic',fontFamily: 'Baloo Da 2, cursive'}}>
             <h2>FSM</h2>
         </Typography>
@@ -113,6 +113,7 @@ function ResponsiveDrawer(props) {
     })}
       </List>
       <Divider />
+      </div> 
     </div>
   );
 
@@ -140,7 +141,7 @@ function ResponsiveDrawer(props) {
       <nav className={classes.drawer} aria-label="mailbox folders" >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
-          <Drawer
+          <Drawer 
             container={container}
             variant="temporary"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
@@ -169,10 +170,6 @@ function ResponsiveDrawer(props) {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
-        <div className={classes.toolbar} style= {{marginTop: 2+'%'}}/>
-            <AllDashboardElements></AllDashboardElements>
-      </main>
     </div>
   );
 }
@@ -185,4 +182,4 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 
-export default ResponsiveDrawer;
+export default withRouter(ResponsiveDrawer);
