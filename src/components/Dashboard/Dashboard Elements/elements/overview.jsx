@@ -1,8 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Card, Grid, CardContent, Typography } from '@material-ui/core';
-import { Assignment,ShoppingBasket,Delete, Build,Done, ShowChart } from '@material-ui/icons';
-import CircularStatic from './progressCircle';
+import { ShoppingBasket,Delete, Build,Done} from '@material-ui/icons';
 import { blue, red, orange, green } from '@material-ui/core/colors';
 import LinearWithValueLable from './linearProgress';
 
@@ -15,10 +14,10 @@ const useStyles = makeStyles({
         width: 4+'vw', 
         borderTopLeftRadius: 100+'%',
         borderBottomLeftRadius: 100+'%',
-        borderBottomRightRadius: 100+'%'
+        borderBottomRightRadius: 100+'%',
     },
-    onHover: {
-        
+    shadow : {
+        boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
     }
 });
 
@@ -32,7 +31,7 @@ export default function Overview(){
     return(
         <Grid>
         
-                <Card style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
+                <Card className= {classes.shadow} style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
                     <Grid className = {classes.card}  style={{backgroundColor: blue[500]}}><ShoppingBasket fontSize = 'large' style={{marginTop: 25+'%', color: 'white'}}></ShoppingBasket></Grid>
                     <CardContent style = {{marginLeft: 5+'%', marginTop:2+'%', paddingBottom: 1+'%'}}>
                         <Typography>
@@ -41,7 +40,7 @@ export default function Overview(){
                         </Typography>
                     </CardContent>
                 </Card>
-                <Card style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
+                <Card className= {classes.shadow} style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
                     <Grid className = {classes.card} style={{backgroundColor: red[500]}}><Delete fontSize = 'large' style={{marginTop: 25+'%', color: 'white'}}></Delete></Grid>
                     <CardContent style = {{marginLeft: 5+'%', marginTop:2+'%', paddingBottom: 1+'%'}}>
                         <Typography>
@@ -50,7 +49,7 @@ export default function Overview(){
                         </Typography>
                     </CardContent>
                 </Card>
-                <Card style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
+                <Card className= {classes.shadow} style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
                     <Grid className = {classes.card} style={{backgroundColor: orange[500]}}><Build fontSize = 'large' style={{marginTop: 25+'%', color: 'white'}}></Build></Grid>
                     <CardContent style = {{marginLeft: 5+'%', marginTop:2+'%', paddingBottom: 1+'%'}}>
                         <Typography>
@@ -59,7 +58,7 @@ export default function Overview(){
                         </Typography>
                     </CardContent>
                 </Card>
-                <Card style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
+                <Card className= {classes.shadow} style={{width: 23+'%', display: 'inline-block', marginRight: 2+'%'}}>
                     <Grid className = {classes.card} style={{backgroundColor: green[500]}}><Done fontSize = 'large' style={{marginTop: 25+'%', color: 'white'}}></Done></Grid>
                     <CardContent style = {{marginLeft: 5+'%', marginTop:2+'%', paddingBottom: 1+'%'}}>
                         <Typography>

@@ -1,13 +1,10 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Card, Grid, Typography, CardHeader, CardContent} from '@material-ui/core';
+import {  Grid, CardContent} from '@material-ui/core';
 import UserDetails from './elements/userDetails';
 import Overview from './elements/overview';
 import PerformanceGraph from './elements/performanceGraph';
-import { Build, Assignment, Home, ShowChart, LocalShipping } from '@material-ui/icons';
 import Workstations from './elements/workstations';
-import ProcessLog from './elements/processLog';
-import { green } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles((theme) => ({

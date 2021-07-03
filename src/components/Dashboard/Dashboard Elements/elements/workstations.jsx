@@ -1,10 +1,7 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Grid, Card, CardHeader, Typography, Paper } from '@material-ui/core';
-import CircularStatic from './progressCircle';
-import zIndex from '@material-ui/core/styles/zIndex';
-import { blue, green, red } from '@material-ui/core/colors';
-import { ShowChart } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Card, CardHeader, Typography } from '@material-ui/core';
+import { green} from '@material-ui/core/colors';
 import LinearWithValueLabel from './linearProgress';
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -53,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Workstations(){
 
     const classes = useStyles();
-    const theme = useTheme();
+    //const theme = useTheme();
 
     const WorkStationData = [
         {
@@ -93,7 +90,7 @@ export default function Workstations(){
         <Grid className= {classes.root}>
            
 {WorkStationData.map((workstation) => (
-                <Card className = {classes.card} style={{width: 30+'%', marginRight: 1+'%', marginLeft: 2+'%'}}>
+                <Card className = {classes.card} style={{width: 30+'%', marginRight: 1+'%', marginLeft: 2+'%',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
                     <CardHeader style={{paddingRight: 0}}
                         title = {
                             <div style={{marginRight: 0}}>
@@ -122,11 +119,15 @@ export default function Workstations(){
                             }
                     />
                         <Grid className={classes.cardContent} style={{textAlign: 'center'}}>
-                            <Grid className = {classes.statusCards} style={{display: 'inline-block', width: 50+'%'}} >
+                            <Grid className = {classes.statusCards} style={{display: 'inline-block', width: 30+'%'}} >
                                 <h6 style={{color: 'hsl(238, 61%, 19%)', fontWeight: 900}}>User</h6>
                                 <h6 style={{color: 'hsl(212, 21%, 53%)', fontWeight: 800}}>{workstation.user}</h6>
                             </Grid>
-                            <Grid className = {classes.statusCards} style={{display: 'inline-block', width: 50+'%'}}>
+                            <Grid className = {classes.statusCards} style={{display: 'inline-block', width: 30+'%'}} >
+                                <h6 style={{color: 'hsl(238, 61%, 19%)', fontWeight: 900}}>Inventory</h6>
+                                <h6 style={{color: 'hsl(212, 21%, 53%)', fontWeight: 800}}>{workstation.inventory}</h6>
+                            </Grid>
+                            <Grid className = {classes.statusCards} style={{display: 'inline-block', width: 30+'%'}}>
                                 <h6 style={{color: 'hsl(238, 61%, 19%)', fontWeight: 900}}>Pressure</h6>
                                 <h6 style={{color: 'hsl(212, 21%, 53%)', fontWeight: 800}}>{workstation.pressure}</h6>
                             </Grid>

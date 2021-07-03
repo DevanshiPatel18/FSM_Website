@@ -6,6 +6,7 @@ import {createStyles, makeStyles} from '@material-ui/core/styles';
 import ResponsiveDrawer from './components/Dashboard/drawer';
 import { blueGrey } from '@material-ui/core/colors';
 
+
 const useStyles = makeStyles((theme) => 
   createStyles({
     content: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) =>
         display: 'block',
         padding: theme.spacing(3),
         position: 'relative',
-        marginTop:'-'+45+'%',
+        marginTop: 5+'%',
         textAlign: 'left',
         marginLeft: 15 + '%',
         width: 85 + '%',
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <div className="App">
+      
       <ResponsiveDrawer></ResponsiveDrawer>
       <Switch>
         <div className = {classes.content}>

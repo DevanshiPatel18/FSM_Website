@@ -1,11 +1,12 @@
 import React from 'react';
-import { withStyles, makeStyles, useTheme } from '@material-ui/core';
+import { withStyles} from '@material-ui/core';
 import {Line, Chart} from 'react-chartjs-2';
 import StreamingPlugin from 'chartjs-plugin-streaming';
 import 'chartjs-adapter-luxon';
-import { FiberManualRecord, ShowChart } from '@material-ui/icons';
-import { pink, purple, blue,teal, grey } from '@material-ui/core/colors';
-import {Grid,Card, CardContent, CardHeader,CardActionArea, Typography, Table, TableRow, TableCell, TableBody, TableHead} from '@material-ui/core'
+import { ShowChart } from '@material-ui/icons';
+import { grey } from '@material-ui/core/colors';
+import {Grid,Card, CardContent, CardHeader,CardActionArea, Table, TableRow, TableCell, TableBody, TableHead} from '@material-ui/core'
+import {Scrollbars } from 'rc-scrollbars';
 
 Chart.register(StreamingPlugin);
 
@@ -147,11 +148,11 @@ const config = {
 
 export default function PerformanceGraph(){
 
-  const theme = useTheme();
+  //const theme = useTheme();
 
     return(
-        <div style={{display: 'flex', justifyContent: 'space-between',width: 100+'%'}}>
-          <Card style={{display: 'inline-block',width: 65+'%', height: 100+'%'}}>
+        <div style={{display: 'flex', justifyContent: 'space-between',width: 100+'%',}}>
+          <Card style={{display: 'inline-block',width: 65+'%', height: 100+'%',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <CardHeader 
             title= {
                 <div>
@@ -173,12 +174,12 @@ export default function PerformanceGraph(){
                 </Grid>
             ))}
             </CardActionArea>
-            <CardContent>
+            <CardContent style={{}}>
                 <Line data = {data} options = {config} style={{}} />
             </CardContent>
             </Card>
             <div item style={{ display: 'inline-block', maxHeight: 100+'%', width: 32+'%'}}>
-            <Card style={{width: 100+'%', display: 'block'}}>
+            <Card style={{width: 100+'%', display: 'block',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',}}>
               <CardHeader style={{paddingBottom: 0}}
                 title = {
                   <div>
@@ -189,6 +190,7 @@ export default function PerformanceGraph(){
               />
               <CardContent style={{paddingTop: 0}}>
                 <Table stickyHeader style={{width: 100+'%',overflow : 'auto', height: 65+'vh', fontFamily: 'Baloo Da 2, cursive', display: 'block'}}>
+                <Scrollbars>
                 <TableHead>
                     <TableRow>
                       <StyledTableCell>Process</StyledTableCell>
@@ -229,6 +231,7 @@ export default function PerformanceGraph(){
                       <StyledTableCell>21/02/2021, 12:12:12</StyledTableCell>
                     </StyledTableRow>
                   </TableBody>
+                  </Scrollbars>
                 </Table>
               </CardContent>
             </Card>

@@ -13,7 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Dashboard, Build, Assignment, LocalShipping, ExitToApp  } from '@material-ui/icons';
+import { Dashboard,LocalShipping, ExitToApp ,Assignment } from '@material-ui/icons';
 import header from './Images/header.jpg';
 import {Grid} from '@material-ui/core';
 import { withRouter } from 'react-router';
@@ -53,7 +53,16 @@ const useStyles = makeStyles((theme) => ({
   },
   links: {
     fontFamily: 'Baloo Da 2, cursive', 
-    fontSize: '10rem'
+    fontSize: '10rem',
+    '&$focusVisible': {
+      backgroundColor: theme.palette.action.selected,
+    },
+    '&$selected, &$selected:hover': {
+      color: 'red',
+    },
+    '&$disabled': {
+      opacity: 0.5,
+    },
   },
 }));
 
@@ -73,18 +82,10 @@ function ResponsiveDrawer(props) {
           icon: Dashboard,
           link: '/'
       },{
-        title: 'Workstation 1',
-        icon: Build,
-        link: '/workstation1'
+        title: "Today's Report",
+        icon: Assignment,
+        link: '/todayreport'
     },{
-          title: 'Workstation 2',
-          icon: Build,
-          link: '/workstation2'
-      },{
-          title: 'Workstation 3',
-          icon: Assignment,
-          link: '/workstation3'
-      },{
           title: 'Order History',
           icon: LocalShipping,
           link: '/orderHistory'
@@ -96,7 +97,7 @@ function ResponsiveDrawer(props) {
   //backgroundColor: '#13154e'
   const drawer = (
     <div style={{backgroundColor: 'white', overflow: 'hidden', height: 100+'vh',  tranparency: 0.52}}>
-      <div style={{color: 'white', overflow: 'hidden', backgroundImage: 'url("https://images.unsplash.com/photo-1501768909872-92489434169d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGZ1dHVyaXN0aWN8ZW58MHwxfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60")'}}>
+      <div style={{color: 'white', overflow: 'hidden', backgroundImage: 'url("https://images.unsplash.com/photo-1518112166137-85f9979a43aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGxpbmVzfGVufDB8MXwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60")'}}>
         <Typography style={{marginTop: 20+'%',textAlign: 'center', fontStyle: 'italic',fontFamily: 'Baloo Da 2, cursive'}}>
             <h2>FSM</h2>
         </Typography>
@@ -105,10 +106,12 @@ function ResponsiveDrawer(props) {
       <List style= {{height: 100+'vh', overflow: 'hidden'}}>
         {drawerData.map((data) => {
           return(
-          <ListItem button>
+          <a href= {data.link} className = {classes.links} style={{color: 'white', textDecoration: 'none', fontFamily: 'Baloo Da 2, cursive'}}>
+          <ListItem  selected = {classes.active} button>
             <Grid component = {data.icon} style= {{marginRight: 10+'%', marginLeft: 10+'%'}}></Grid>
-            <a href= {data.link} className = {classes.links} style={{color: 'white', textDecoration: 'none', }}><ListItemText multiline = {classes.links} classes= {classes.links} primary={data.title} /></a>
+            <ListItemText style={{fontFamily: 'Baloo Da 2, cursive'}} multiline = {classes.links} classes= {classes.links} primary={data.title} />
           </ListItem>
+          </a>
           );    
     })}
       </List>
@@ -120,7 +123,7 @@ function ResponsiveDrawer(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <div className={classes.root} style={{margin:0, border: 'none', height: 100+'vh'}}>
+    <div className={classes.root} style={{margin:0, border: 'none'}}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar style = {{padding: 0,}}>
