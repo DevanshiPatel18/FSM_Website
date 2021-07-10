@@ -1,9 +1,12 @@
-import React from 'react';
-import { Grid, Typography,Card,CardHeader, CardContent, Table, TableRow, TableBody, TableCell, CardActionArea } from '@material-ui/core';
+import React, { createRef } from 'react';
+import {Grid, Typography,Card,CardHeader, CardContent, Table, TableRow, TableBody, TableCell, CardActionArea, Button } from '@material-ui/core';
 import { Assignment } from '@material-ui/icons';
 import BarGraph from './barchart';
 import DonutGraph from './donutchart';
 import useParameterValues from './parametValues';
+import ReactPDF from '@react-pdf/renderer/lib/react-pdf.browser.es.js';
+import { PDFExport,savePDF } from '@progress/kendo-react-pdf';
+import './pdf.css';
 
 const getDate = () => {
     var today = new Date();
@@ -11,22 +14,35 @@ const getDate = () => {
     return (today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear())
 }
 
+
+
 export default function Report(){
 
     const {avgAvail, avgOEE, avgPer, avgQual} = useParameterValues();
+    const ref = React.createRef();
+    
 
     return(
-        <Grid style={{height: 82.5+'vh'}}>
+        
+        <Grid style={{height: 82.5+'vh'}} >
             <Grid>
                 <Typography style={{}}>
                     <h1 style={{display: 'inline-block'}}>Report</h1>
                     <p style={{display: 'inline-block',fontSize: 13, marginLeft: 1+'%'}} variant = 'body2'>as on {getDate()}</p>
-                    <Typography style={{ marginTop: 1+'%', float:' right'}}>
+                    <Button onClick={() => {
+        if (ref.current) {
+            console.log(ref.current.style);
+          ref.current.save();
+        }
+      }}>
+                    <Typography style={{ marginTop: 1+'%', float:' right'}} >
                     <h6>Generate Report <Assignment></Assignment></h6>
                     </Typography>
+                    </Button>
                 </Typography>
             </Grid>
-            <Grid style={{display: 'flex',alignItems: 'stretch', marginTop: 2+'%', height: 60+'vh'}}>
+            <PDFExport ref= {ref} >
+            <Grid style={{display: 'flex',alignItems: 'stretch', marginTop: 2+'%', height: 60+'vh'}} >
                 <Card style={{flex: 1}}>
                 <CardHeader 
                         style={{paddingBottom: 0}}
@@ -107,9 +123,10 @@ export default function Report(){
                         </CardContent>
                 </Card>
             </Grid>
+            </PDFExport>
         </Grid>
-    )
-}
+    
+    )}
 
 /*<Grid style={{flex: '1'}}>
                 <Card>
