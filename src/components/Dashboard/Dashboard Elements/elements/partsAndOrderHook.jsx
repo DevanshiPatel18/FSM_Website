@@ -6,35 +6,44 @@ require('firebase/firestore')
 require('firebase/auth')
 
 
-export default function usePartsAndOrder(){
+export default function usePartsAndOrder() {
     const [manufactured, setManufactured] = useState(0)
     const [defective, setDefective] = useState(0)
-    const [process, setProcess] = useState("No Order")
+    const [process, setProcess] = useState()
     const [orderType, setOrderType] = useState('No Order')
 
     React.useEffect(() => {
         db.collection('Order').doc('Status').get().then((doc) => {
             setManufactured(doc.get('Total Manufactured'));
             setDefective(doc.get('Total Defective'));
-            
-                db.collection('OrderTest').doc('CurrentOrder').onSnapshot((doc) => {
+
+            db.collection('OrderTest').doc('CurrentOrder').onSnapshot((doc) => {
+                setProcess(doc.get('Process'));
+                if (process !== 'Waiting...') {
                     setProcess(doc.get('Process'));
-                    if( process !== 'Waiting...'){
-                        setProcess(doc.get('Process'));
+                    if(doc.data().Process === 'Waiting for pallet' || doc.data().Process === 'Order Status: Ready to Accept order'){
                         db.collection("Order").orderBy("Time", "desc").limit(1).onSnapshot((snapshot) => {
-                          setOrderType(snapshot.docs[0].data().Type)
+                            setOrderType(snapshot.docs[0].data().Type)
                         });
                     }
-                })
-            
+                    if(doc.data().Process === 'Machine 3 Stopped'){
+                       
+                            setOrderType("No order")
+                    
+                    }
+                }
+            })
+
         })
 
         //db.collection("Order").orderBy("Time", "desc").limit(1).onSnapshot((snapshot) => {
-          //  setOrderTime( new Date(snapshot.docs[0].data().Time.seconds))
+        //  setOrderTime( new Date(snapshot.docs[0].data().Time.seconds))
         //});
 
     }, [0])
-    return{
+
+   
+    return {
         defective,
         manufactured,
         process,

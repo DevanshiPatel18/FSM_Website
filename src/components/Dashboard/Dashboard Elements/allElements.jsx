@@ -6,6 +6,7 @@ import Overview from './elements/overview';
 import PerformanceGraph from './elements/performanceGraph';
 import Workstations from './elements/workstations';
 import PropTypes from 'prop-types';
+import ProcessLog from './elements/processLog';
 
 const useStyles = makeStyles((theme) => ({
     performanceGraph: {
@@ -68,6 +69,7 @@ export default function AllDashboardElements(props){
     
     const theme = useTheme();
     const classes = useStyles();
+    
     console.log(props.token)
     return(
         <Grid>
@@ -75,25 +77,32 @@ export default function AllDashboardElements(props){
                     <UserDetails token = {props.token}></UserDetails>
                     <hr />
                 </Grid>
-                
-                    <Grid id = 'Overview' className = {classes.overView} style= {{padding: 2+'%'}}>
-                        <Overview token = {props.token}></Overview>
-                    </Grid>
-                    <Grid>
-                        <Grid   id = 'PerformanceGraph' className = {classes.performanceGraph} style= {{ height:100+'%', width: 100+'%' }}>
-                        <Grid>
-                            <CardContent style={{}}>
-                                <Grid>
-                                    <PerformanceGraph token = {props.token} style={{ }}></PerformanceGraph>
-                                </Grid>
-                            </CardContent>
-                        </Grid>
-                        </Grid>
-                    </Grid>
-                
-                <Grid  id = 'Workstations' style={{display: 'inline-block', width: 100+'%'}}>
-                    <Workstations></Workstations>
+
+                <Grid style={{ width: 100+'%'}}>
+                    <Overview token = {props.token}></Overview>
                 </Grid>
+
+                <Grid style={{ width: 100+'%', margin: 'auto'}}>
+                       <Grid style={{display: 'flex', justifyContent: 'space-between', alignItems: 'stretch'}}>
+                                <Grid style = {{width: 25+'%', height: 'inherit'}}>
+                                    <ProcessLog></ProcessLog>
+                                </Grid>
+                                <Grid style={{width: 73+'%'}}>
+                                    <Grid style={{}}>
+                                        <Grid style={{ width: 100+'%', height: 60+'vh'}}>
+                                            <PerformanceGraph style={{ }}></PerformanceGraph>
+                                        </Grid>
+                                        <Grid  id = 'Workstations' style={{ width: 100+'%', marginTop: 1+'%'}}>
+                                            <Workstations
+                                            
+                                            ></Workstations>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                
+                        </Grid>
+                        
+                    </Grid>
         </Grid>
     );
 

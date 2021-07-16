@@ -4,7 +4,7 @@ import './login.css';
 import logo from './images/logo.png';
 import db from '../../firebase';
 import { Redirect } from 'react-router-dom';
-
+import labjpeg from './images/labjpeg.jpeg'
 const jwt  = require('jsonwebtoken');
 
 export default function Login({setToken}){
@@ -63,7 +63,7 @@ export default function Login({setToken}){
                                 </form>
                             </div>
                             <div className = 'col-md-3 col-lg-4 col-xl-5 image-container'>
-                                <img className = 'image-fluid random'src="https://images.unsplash.com/photo-1617396900799-f4ec2b43c7ae?ixid=MnwxMjA3fDB8MHx2aXN1YWwtc2VhcmNofDF8fHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="alt-img" />    
+                                <img className = 'image-fluid random'src= {labjpeg} alt="alt-img" />    
                             </div> 
                         </div>
                     </div>

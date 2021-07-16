@@ -2,55 +2,114 @@ import { useEffect } from "react";
 import { useState } from "react";
 import React from 'react'
 import db from '../../../../firebase';
+import { sendAverage, useSendAverage } from "./average";
 const firebase = require('firebase');
 
 require('firebase/firestore')
 require('firebase/auth')
 
-var numberOfEntries = 0;
+
+let oee =0;
+let avail =0;
+let qual =0;
+let per =0;
+
+let oeecount =0;
+let percount =0;
+let availcount =0;
+let qualcount =0;
+
+var flag= 0;
 
 export default function useParameterValues(){
-    const [avgOEE, setAvgOEE] = useState(0);
-    const [avgAvail, setAvgAvail] = useState(0);
-    const [avgPer, setAvgPer] = useState(0);
-    const [avgQual, setAvgQual] = useState(0);
     const [currentOEE, setCurrentOEE] = useState(0);
     const [currentAvail, setCurrentAvail] = useState(0);
     const [currentQual, setCurrentQual] = useState(0);
     const [currentPer, setCurrentPer] = useState(0);
+  
 
-    console.log(avgOEE+" "+avgAvail+" "+avgPer+" "+avgQual)
   React.useEffect(() => {
     db.collection('Realtime').doc('WS 1').onSnapshot((doc) => {
-      console.log(doc.data().oee)
-        numberOfEntries += 1;
-        setCurrentOEE(doc.data().oee + 10);
-        setCurrentAvail(doc.data().availability + 10);
-        setCurrentPer(doc.data().performance + 10);
-        setCurrentQual(doc.data().quality + 10);
-        console.log(currentOEE+" "+currentAvail+" "+currentPer+" "+currentQual)
+     
+        
+        let OEE = doc.data().oee;
+        let AVAIL = doc.data().availability;
+        let PER = doc.data().performance;
+        let QUAL = doc.data().quality;
 
-        setAvgOEE(((avgOEE*numberOfEntries + currentOEE)/(numberOfEntries+1)).toFixed(3));
-        setAvgAvail(((avgAvail*numberOfEntries + currentAvail)/(numberOfEntries+1)).toFixed(3));
-        setAvgQual(((avgQual*numberOfEntries + currentQual)/(numberOfEntries+1)).toFixed(3));
-        setAvgPer(((avgPer*numberOfEntries + currentPer)/(numberOfEntries+1)).toFixed(3));
+        setCurrentOEE(OEE);
+        setCurrentAvail(AVAIL);
+        setCurrentPer(PER);
+        setCurrentQual(QUAL);
+      
+        if(OEE > 0){
+          oee += OEE;
+          oeecount += 1;
+          //console.log('*OEE:' + oee + " " + oeecount);
+        }
 
-        console.log(avgOEE+" "+avgAvail+" "+avgPer+" "+avgQual)
+        if(PER > 0){
+          per += PER;
+          percount += 1;
+          //console.log('*PER:' + per + " " + percount);
+        
+        }
 
+        if(QUAL > 0){
+          qual += QUAL;
+          qualcount += 1;
+          //console.log('*QUAL:' + qual + " " + qualcount);
+
+        }
+
+        if(AVAIL > 0){
+          avail += AVAIL;
+          availcount += 1;
+          //console.log('*AVAIL:' +avail + " " + availcount);
+
+        }
+
+        if(doc.data().status === 'Completed'){
+          flag =1;
+          
+        }
 
     })
   }, [])
+
+  if (flag === 1){
+    let avgo =  (oee/oeecount)
+    let avga = (avail/availcount)
+    let avgp = (per/percount)
+    let avgq = (qual/qualcount)
+    //console.log(avga + " " + avgo + " " + avgp + " " + avgq);
+    if(avga && avgo && avgp && avgq) {
+    sendAverage()
+    }
+    flag= 0;
+
+  }
+  flag =0 ;
+
 return{
-    avgOEE,
-    avgAvail,
-    avgPer,
-    avgQual,
+   
     currentAvail,
     currentOEE,currentPer,
-    currentQual
+    currentQual,
+    oee,oeecount,
+    qual, qualcount,
+    avail, availcount,
+    per,percount
 }
 }
 
+
+export {
+  oee, oeecount,
+  avail, availcount,
+  per,percount,
+  qual,qualcount
+}
 /*const onRefresh = chart => {
   const now = Date.now();
   numberOfEntries += 1;

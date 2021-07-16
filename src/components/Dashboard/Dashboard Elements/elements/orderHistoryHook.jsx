@@ -12,9 +12,8 @@ export default function useOrderHistoryDetails() {
     React.useEffect(() => {
     db.collection('Order').onSnapshot((doc) => {
         doc.forEach((document) => {
-            if(document.data().Type){
+            
                 setHistory([...history, document.data()])
-            }
         })
     })
 }, []);

@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 function logout(){
   localStorage.clear();
   sessionStorage.clear();
-  <Redirect to = '/login'/>
+  <Redirect to = '/'/>
 }
 
 function ResponsiveDrawer(props) {
@@ -137,7 +137,7 @@ function ResponsiveDrawer(props) {
   return (
     <div className={classes.root} style={{margin:0, border: 'none'}}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar} style={{backgroundColor : 'white'}}>
         <Toolbar style = {{padding: 0,}}>
           <IconButton
             color="inherit"
