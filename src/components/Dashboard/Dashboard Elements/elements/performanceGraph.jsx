@@ -1,124 +1,115 @@
 import React from 'react';
-import { withStyles} from '@material-ui/core';
-import {Line, Chart} from 'react-chartjs-2';
+import { withStyles } from '@material-ui/core';
+import { Line, Chart } from 'react-chartjs-2';
 import StreamingPlugin from 'chartjs-plugin-streaming';
 import 'chartjs-adapter-luxon';
 import { ShowChart } from '@material-ui/icons';
 import { grey } from '@material-ui/core/colors';
-import {Grid,Card, CardContent, CardHeader,CardActionArea, Table, TableRow, TableCell, TableBody, TableHead} from '@material-ui/core'
-import {Scrollbars } from 'rc-scrollbars';
+import { Grid, Card, CardContent, CardHeader, CardActionArea, Table, TableRow, TableCell, TableBody, TableHead } from '@material-ui/core'
+import { Scrollbars } from 'rc-scrollbars';
+import CustomLabel from './customLabels';
+import pure from 'recompose/pure'
+import db from '../../../../firebase';
+import { useState } from 'react';
+const firebase = require('firebase');
+require('firebase/firestore')
+require('firebase/auth')
 
 Chart.register(StreamingPlugin);
 
 //const useStyles = makeStyles({});
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: grey[800],
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
 
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-}))(TableRow);
+export default function PerformanceGraph() {
+  //const theme = useTheme();
 
-const avgOEE = 99;
-const avgPer = 74;
-const avgQual = 63;
-const avgAvail = 78;
-
-const customLabel = [
-  {
-    icon: ShowChart,
-    text: 'OEE',
-    value: avgOEE,
-    color: '#1199EE',
-  },{
-    icon: ShowChart,
-    text: 'Performance',
-    value: avgPer,
-    color: '#D1A166',
-  },{
-    icon: ShowChart,
-    text: 'Quality',
-    value: avgQual,
-    color: '#E03409',
-  },{
-    icon: ShowChart,
-    text: 'Availibility',
-    value: avgAvail,
-    color: '#000000',
-  }
-]
+  let thiscurrentOEE = 0;
+  let thiscurrentAvail = 0;
+  let thiscurrentQual = 0;
+  let thiscurrentPer = 0;
 
 
-const data = {
-  datasets: [
-    {
-      label: 'OEE',
-      //backgroundColor: 'hsla(203,87%,50%,0.5)',
-      borderColor: '#1199EE',
-      data: [],
-      borderWidth: 2,
-      pointRadius: 0,
-   
-    },
-    {
-      label: 'Performance',
-      //backgroundColor: 'hsla(33, 54%, 61%,0.5)',
-      borderColor: '#D1A166',
-      data: [],
-      borderWidth: 2,
-      pointRadius: 0,
-     
-    },
-    {
-      label: 'Availibility',
-      //backgroundColor: 'hsla(12, 92%, 46%,0.5)',
-      borderColor: '#E03409',
-      data: [],
-      borderWidth: 2,
-      pointRadius: 0,
-     
-    },{
-      label: 'Quality',
-      //backgroundColor: 'hsla(0, 0%, 0%,0.5)',   
-      borderColor: '#000000',
-      data: [],
-      borderWidth: 2,
-      pointRadius: 0,
-    }
-  ]
-};
 
-const onRefresh = chart => {
-  const now = Date.now();
-  chart.data.datasets.forEach(dataset => {
-    dataset.data.push({
-      x: now,
-      y: 1 + Math.random()*(100)
-    });
-  });
-};
 
-const config = {
-  reponsive: true,
-  maintainAspectRatio: true,
+  const data = {
+    datasets: [
+      {
+        id: 'oee',
+        label: 'OEE',
+        //backgroundColor: 'hsla(203,87%,50%,0.5)',
+        borderColor: '#1199EE',
+        data: [],
+        borderWidth: 2,
+        pointRadius: 0,
+
+      },
+      {
+        id: 'performance',
+        label: 'Performance',
+        //backgroundColor: 'hsla(33, 54%, 61%,0.5)',
+        borderColor: '#D1A166',
+        data: [],
+        borderWidth: 2,
+        pointRadius: 0,
+
+      },
+      {
+        id: 'availibility',
+        label: 'Availibility',
+        //backgroundColor: 'hsla(12, 92%, 46%,0.5)',
+        borderColor: '#E03409',
+        data: [],
+        borderWidth: 2,
+        pointRadius: 0,
+
+      }, {
+        id: 'quality',
+        label: 'Quality',
+        //backgroundColor: 'hsla(0, 0%, 0%,0.5)',   
+        borderColor: '#000000',
+        data: [],
+        borderWidth: 2,
+        pointRadius: 0,
+      }
+    ]
+  };
+
+
+  const onRefresh = chart => {
+    const now = Date.now();
+
+    db.collection('Realtime').doc('WS 1').onSnapshot((snapshot) => {
+      thiscurrentOEE = snapshot.data().oee;
+      thiscurrentAvail = snapshot.data().availability;
+      thiscurrentPer = snapshot.data().performance;
+      thiscurrentQual = snapshot.data().quality;
+    })
+
+    chart.data.datasets[0].data.push({ x: now, y: thiscurrentOEE })
+    chart.data.datasets[1].data.push({ x: now, y: thiscurrentPer })
+    chart.data.datasets[2].data.push({ x: now, y: thiscurrentQual })
+    chart.data.datasets[3].data.push({ x: now, y: thiscurrentAvail })
+
+    //chart.data.datasets.forEach((dataset,id) => {
+    //  dataset.data.push({
+    //  x: now,
+    // y: Math.random()*100
+    //});
+    //});
+
+
+  };
+
+  const config = {
+    reponsive: true,
+    maintainAspectRatio: false,
     scales: {
       x: {
         type: 'realtime',
         realtime: {
           duration: 20000,
           refresh: 1000,
-          delay: 2000,
+          delay: 1000,
           onRefresh: onRefresh
         }
       },
@@ -137,107 +128,36 @@ const config = {
         display: false,
         position: 'bottom',
         labels: {
-          fontSize: 0.1+'vw',
+          fontSize: 0.1 + 'vw',
           color: 'hsl(238, 61%, 19%)',
           font: '"Baloo Da 2", cursive'
         }
       }
     },
-};
+  };
 
 
-export default function PerformanceGraph(){
 
-  //const theme = useTheme();
-
-    return(
-        <div style={{display: 'flex', justifyContent: 'space-between',width: 100+'%',}}>
-          <Card style={{display: 'inline-block',width: 65+'%', height: 100+'%',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
-            <CardHeader 
-            title= {
-                <div>
-                  <h4> Workstation 1 Analytics</h4>
-                  <hr />
-                  </div>
-               }
-            />
-            <CardActionArea style={{textAlign :'center'}}>
-            {customLabel.map((label) => (
-                <Grid style= {{ margin: 1+'%',width: 20+'%', display: 'inline-block'}}>
-                <Grid style={{display: 'inline-block',padding: 6+'%', backgroundColor: label.color, borderRadius: 100+'%'}}>
-                <ShowChart style={{color: 'white'}} size = 'large'></ShowChart>
-                </Grid>
-                  <Grid style={{display: 'inline-block', marginLeft: 5+ '%', verticalAlign: 'top'}}>
-                  <h4 style={{marginBottom: 0}}>{label.value}</h4>
-                  <p variant = 'body2' >{label.text}</p>
-                  </Grid>
-                </Grid>
-            ))}
-            </CardActionArea>
-            <CardContent style={{}}>
-                <Line data = {data} options = {config} style={{}} />
-            </CardContent>
-            </Card>
-            <div item style={{ display: 'inline-block', maxHeight: 100+'%', width: 32+'%'}}>
-            <Card style={{width: 100+'%', display: 'block',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',}}>
-              <CardHeader style={{paddingBottom: 0}}
-                title = {
-                  <div>
-                    <h4>Process Log</h4>
-                    <hr />
-                  </div>
-                } 
-              />
-              <CardContent style={{paddingTop: 0}}>
-                <Table stickyHeader style={{width: 100+'%',overflow : 'auto', height: 65+'vh', fontFamily: 'Baloo Da 2, cursive', display: 'block'}}>
-                <Scrollbars>
-                <TableHead>
-                    <TableRow>
-                      <StyledTableCell>Process</StyledTableCell>
-                      <StyledTableCell>TimeStamp</StyledTableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                  <StyledTableRow >
-                      <StyledTableCell>Pallet entered workstation 1</StyledTableCell>
-                      <StyledTableCell>21/02/2021, 12:12:12</StyledTableCell>
-                    </StyledTableRow>
-                    <StyledTableRow>
-                      <StyledTableCell>Pallet entered workstation 1</StyledTableCell>
-                      <StyledTableCell>21/02/2021, 12:12:12</StyledTableCell>
-                    </StyledTableRow>
-                    <StyledTableRow>
-                      <StyledTableCell>Pallet entered workstation 1</StyledTableCell>
-                      <StyledTableCell>21/02/2021, 12:12:12</StyledTableCell>
-                    </StyledTableRow>
-                    <StyledTableRow>
-                      <StyledTableCell>Pallet entered workstation 1</StyledTableCell>
-                      <StyledTableCell>21/02/2021, 12:12:12</StyledTableCell>
-                    </StyledTableRow><StyledTableRow>
-                      <StyledTableCell>Pallet entered workstation 1</StyledTableCell>
-                      <StyledTableCell>21/02/2021, 12:12:12</StyledTableCell>
-                    </StyledTableRow><StyledTableRow>
-                      <StyledTableCell>Pallet entered workstation 1</StyledTableCell>
-                      <StyledTableCell>21/02/2021, 12:12:12</StyledTableCell>
-                    </StyledTableRow>
-                    <StyledTableRow>
-                      <StyledTableCell>Pallet entered workstation 1</StyledTableCell>
-                      <StyledTableCell>21/02/2021, 12:12:12</StyledTableCell>
-                    </StyledTableRow><StyledTableRow>
-                      <StyledTableCell>Pallet entered workstation 1</StyledTableCell>
-                      <StyledTableCell>21/02/2021, 12:12:12</StyledTableCell>
-                    </StyledTableRow><StyledTableRow>
-                      <StyledTableCell>Pallet entered workstation 1</StyledTableCell>
-                      <StyledTableCell>21/02/2021, 12:12:12</StyledTableCell>
-                    </StyledTableRow>
-                  </TableBody>
-                  </Scrollbars>
-                </Table>
-              </CardContent>
-            </Card>
+  return (
+    
+      <Card style={{ display: 'inline-block', width: 100 + '%', height: 100 + '%', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px' }}>
+        <CardHeader
+          title={
+            <div>
+              <h4> Workstation 1 Analytics</h4>
+              <hr />
             </div>
-        </div>
-    );
+          }
+        />
+        <CardActionArea style={{ textAlign: 'center' }}>
+          <CustomLabel></CustomLabel>
+        </CardActionArea>
+        <CardContent style={{height :  65+'%'}}>
+          <Line data={data} options={config} style={{}} />
+        </CardContent>
+      </Card>
+
+  );
 
 }
 /*<Table style={{display: 'block',overflow: 'scroll', height: 100+'%'}}>
@@ -271,6 +191,10 @@ export default function PerformanceGraph(){
                       <TableCell>21/02/2021, 12:12:12</TableCell>
                     </TableRow>
 
-                    
+
                   </TableBody>
+chart.data.datasets[0].data.push({x: now, y: thiscurrentOEE})
+      chart.data.datasets[1].data.push({x: now, y: thiscurrentPer})
+      chart.data.datasets[2].data.push({x: now, y: thiscurrentQual})
+      chart.data.datasets[3].data.push({x: now, y: thiscurrentAvail})
                 </Table>*/

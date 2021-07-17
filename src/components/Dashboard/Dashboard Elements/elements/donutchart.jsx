@@ -1,6 +1,10 @@
 import { blue, green, orange } from '@material-ui/core/colors';
 import {Doughnut, Chart} from 'react-chartjs-2';
+import useWorsktationTimeAnalytics from './workstationTimeAnalysis';
 
+export default function DonutGraph(){
+
+ const {workstation1Time, workstation2Time, workstation3Time} = useWorsktationTimeAnalytics();
 
 const data = {
     height: 40+'vh',
@@ -11,7 +15,7 @@ const data = {
     ],
     datasets: [{
       label: 'My First Dataset',
-      data: [300, 50, 100],
+      data: [workstation1Time.time, workstation2Time.time, workstation3Time.time],
       backgroundColor: [
         'rgb(255, 99, 132)',
         'rgb(54, 162, 235)',
@@ -79,7 +83,7 @@ const data = {
 
   
 
-  export default function DonutGraph(){
+
       return(
           <div style={{}}>
           <Doughnut data={data} options = {config}/>

@@ -3,14 +3,46 @@ import React from 'react';
 import { Grid} from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import Clock from 'react-live-clock';
+import PropTypes from 'prop-types';
+import db from '../../../../firebase';
+const firebase = require('firebase');
+require('firebase/firestore')
+require('firebase/auth')
+
+const jwt = require('jsonwebtoken');
 
 //const useStyles = makeStyles({});
+
+/*db.collection('Order').doc('Status').get().then((doc)=> {
+   
+        console.log(doc.data());
+})
+*/
+
 
 const getDate = () => {
     var today = new Date();
     var dayName = getDayName(today.getDay());
 
-    return (dayName + ',' +today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear())
+    return (dayName + ', ' + getMonthName(today.getMonth() + 1)+ ", " + today.getDate()  + ', ' + today.getFullYear())
+}
+
+const getMonthName = (month) => {
+    switch(month){
+        case 1 : return 'January';
+        case 2 : return 'February';
+        case 3 : return 'March';
+        case 4 : return 'April';
+        case 5 : return 'May';
+        case 6 : return 'June';
+        case 7 : return 'July';
+        case 8 : return 'August';
+        case 9 : return 'September';
+        case 10 : return 'October';
+        case 11 : return 'November';
+        case 12 : return 'December';
+        default : return "";
+    }
 }
 
 function getDayName(number){
@@ -25,12 +57,14 @@ function getDayName(number){
         default: return 'not a number';
     }
 }
-export default function UserDetails(){
+export default function UserDetails(props){
+    const username = jwt.decode(props.token)
+    console.log(username)
 
     return(
         <Grid style={{color: '#13154e',width: 100+'%', height: 5+'vh'}}>
             <Grid style={{float: 'left'}}>
-                <h4>Hello, USER</h4>
+                <h4>Hello, {username.username}</h4>
             </Grid>
             <Grid style= {{float: 'right'}}>
                 <Typography > 
@@ -42,3 +76,12 @@ export default function UserDetails(){
     );
 
 }
+
+UserDetails.propTypes = {
+    /**
+     * Injected by the documentation to work in an iframe.
+     * You won't need it on your project.
+     */
+    window: PropTypes.func,
+    token: PropTypes.string
+  };

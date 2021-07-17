@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,6 +17,10 @@ import { Dashboard,LocalShipping, ExitToApp ,Assignment } from '@material-ui/ico
 import header from './Images/header.jpg';
 import {Grid} from '@material-ui/core';
 import { withRouter } from 'react-router';
+import { Redirect } from 'react-router-dom';
+
+
+const jwt = require('jsonwebtoken');
 
 const drawerWidth = 15+'%';
 
@@ -66,12 +70,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function logout(){
+  localStorage.clear();
+  sessionStorage.clear();
+}
+
 function ResponsiveDrawer(props) {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const username = jwt.decode(props.token)
+  //console.log(username.username)
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -91,7 +101,9 @@ function ResponsiveDrawer(props) {
           link: '/orderHistory'
       },{
           title: 'Log Out',
-          icon: ExitToApp
+          icon: ExitToApp,
+          onClick : logout,
+          link: '/'
       }
   ];
   //backgroundColor: '#13154e'
@@ -109,7 +121,7 @@ function ResponsiveDrawer(props) {
           <a href= {data.link} className = {classes.links} style={{color: 'white', textDecoration: 'none', fontFamily: 'Baloo Da 2, cursive'}}>
           <ListItem  selected = {classes.active} button>
             <Grid component = {data.icon} style= {{marginRight: 10+'%', marginLeft: 10+'%'}}></Grid>
-            <ListItemText style={{fontFamily: 'Baloo Da 2, cursive'}} multiline = {classes.links} classes= {classes.links} primary={data.title} />
+            <ListItemText style={{fontFamily: 'Baloo Da 2, cursive'}} multiline = {classes.links} classes= {classes.links} primary={data.title} onClick = {data.onClick}/>
           </ListItem>
           </a>
           );    
@@ -125,7 +137,7 @@ function ResponsiveDrawer(props) {
   return (
     <div className={classes.root} style={{margin:0, border: 'none'}}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar} style={{backgroundColor : 'white'}}>
         <Toolbar style = {{padding: 0,}}>
           <IconButton
             color="inherit"
@@ -183,6 +195,7 @@ ResponsiveDrawer.propTypes = {
    * You won't need it on your project.
    */
   window: PropTypes.func,
+  token: PropTypes.func
 };
 
 export default withRouter(ResponsiveDrawer);

@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import useStatusChange from './statuschange';
 
 function LinearProgressWithLabel(props) {
   return (
@@ -35,22 +36,20 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LinearWithValueLabel() {
+export default function LinearWithValueLabel(props) {
   const classes = useStyles();
-  const [progress, setProgress] = React.useState(10);
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
 
   return (
     <div className={classes.root}>
-      <LinearProgressWithLabel value={progress} />
+      <LinearProgressWithLabel value={parseInt(props.progress)} />
     </div>
   );
 }
+
+LinearProgressWithLabel.propTypes = {
+  /**
+   * The value of the progress indicator for the determinate and buffer variants.
+   * Value between 0 and 100.
+   */
+  progress: PropTypes.number.isRequired,
+};

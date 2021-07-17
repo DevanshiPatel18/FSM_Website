@@ -1,15 +1,28 @@
 import firebase from "firebase/app";
 require('firebase/firestore')
 require('firebase/auth')
-
-const firebaseConfig = { 
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET_ID,
-    appId: process.env.REACT_APP_APP_ID
-};
-  
+/*
+const firebaseConfig = {
+    apiKey: "AIzaSyAuUHIhpFNEzqp-e3pOPq901ImasERTNdw",
+    authDomain: "fsmdashboardtest.firebaseapp.com",
+    databaseURL: "https://fsmdashboardtest.firebaseio.com",
+    projectId: "fsmdashboardtest",
+    storageBucket: "fsmdashboardtest.appspot.com",
+    messagingSenderId: "686384032480",
+    appId: "1:686384032480:web:ee283b18254f5cc5defe85",
+    measurementId: "G-M5ML7BED0Q" 
+    
+  };
+  */
+ var firebaseConfig = {
+     apiKey: "AIzaSyDDCMgxDgJmxCGm8sfo4QNSEwxhzP5T8qo",
+    authDomain: "realtimedashboard-53e96.firebaseapp.com",
+     projectId: "realtimedashboard-53e96",
+    storageBucket: "realtimedashboard-53e96.appspot.com",
+     messagingSenderId: "1037949123340",
+     appId: "1:1037949123340:web:867fc1b1816d8a605de729"
+   };
+   
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore(); 
 export default db;

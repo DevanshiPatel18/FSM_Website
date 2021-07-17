@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './login.css';
 import logo from './images/logo.png';
 import db from '../../firebase';
+import { Redirect } from 'react-router-dom';
+import labjpeg from './images/labjpeg.jpeg'
+const jwt  = require('jsonwebtoken');
 
-const Login = () => {
+export default function Login({setToken}){
     const [form, setForm] = useState({
         Username: '',
         Password: ''
     })
+    
+
 
     const handleInputChange = (e) => {
         var {name, value} = e.target
@@ -19,12 +25,17 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         let flag = 1;
-        console.log(form.Username + " " + form.Password)
+        //console.log(form.Username + " " + form.Password)
         db.collection('User').get().then((querySnapshot) => {
+            console.log(querySnapshot);
             querySnapshot.forEach((doc) => {
-                console.log(doc.data().Email + " " + doc.data().Password + " " + form);
-                if(doc.data().Email === form.Username && doc.data().Password === form.Password){
-                    alert('hello' + form.Username);
+          //      console.log(doc.data().Email + " " + doc.data().Password + " " );
+                if(doc.data().email === form.Username && doc.data().password === form.Password){
+                    //alert('hello' + doc.data().username);
+                    let token = jwt.sign({username: doc.data().username,email: form.Username, password: form.Password}, 'A_VERY_LONG_STRING_FOR_AUTHNETICATION_AND_USER_PROTECTION', {algorithm: 'HS256'}, {expiresIn: '1hr'});
+                    setToken(token);
+                    console.log(token);
+                     
                     flag = 0;
                 }
             })
@@ -52,7 +63,7 @@ const Login = () => {
                                 </form>
                             </div>
                             <div className = 'col-md-3 col-lg-4 col-xl-5 image-container'>
-                                <img className = 'image-fluid random'src="https://images.unsplash.com/photo-1617396900799-f4ec2b43c7ae?ixid=MnwxMjA3fDB8MHx2aXN1YWwtc2VhcmNofDF8fHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="alt-img" />    
+                                <img className = 'image-fluid random'src= {labjpeg} alt="alt-img" />    
                             </div> 
                         </div>
                     </div>
@@ -60,5 +71,7 @@ const Login = () => {
             </section>
         )
 }
- 
-export default Login;
+
+Login.propTypes = {
+    setToken : PropTypes.func.isRequired
+}
